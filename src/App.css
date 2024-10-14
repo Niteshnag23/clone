@@ -1,38 +1,43 @@
-.App {
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  /* overflow-x: hidden; */
+}
+
+/* Forms - make inputs and select visually consistent */
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+select {
+  appearance: none; /* Remove default styling for select */
+}
+
+/* Utility class for text center alignment */
+.text-center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.centered-section {
+  text-align: center;
+  margin: 40px 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.comfort-comment {
+  font-size: 48px; 
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.availability-heading {
+  font-size: 32px;
+  color: #007bff;
 }

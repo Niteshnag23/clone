@@ -1,0 +1,116 @@
+.room-availability-calenda {
+    text-align: center;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.calendar-title{
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#location-select{
+    margin-left: 47%;
+    padding: 12px;
+    border: 1px solid #ddd; 
+    border-radius: 30px; 
+    font-size: 16px; 
+}
+
+.loclab{
+    margin-left: 46.7%;
+}
+
+.legend {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 0px;
+}
+
+.legend p {
+    margin-right: 20px; /* Space between the labels */
+}
+
+.calendar-wrapper {
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.calendar-table {
+    display: grid;
+    grid-template-columns: 1fr repeat(7, 1fr); 
+    gap: 5px;
+    margin-top: 20px;
+    width: 100%; /* Ensure the table takes full width */
+    min-width: 1000px;
+    justify-content: center; /* Center the entire calendar */
+}
+
+.room-header,
+.date-header {
+    font-weight: bold;
+    padding: 5px;
+    font-size: 10px;
+    border: solid thin;
+    border-color: whitesmoke;
+    text-align: center; /* Center the text in the headers */
+}
+
+
+
+
+.room-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center room number text */
+}
+
+.dot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure the container takes up full cell height */
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.day-box, .date-box {
+    background-color: lightgray;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .calendar-table {
+        grid-template-columns: repeat(8, 1fr); /* Adjust column width for mobile */
+        gap: 5px;
+    }
+
+    .room-header,
+    .date-header {
+        font-size: 14px;
+    }
+
+    .dot {
+        width: 15px;
+        height: 15px;
+    }
+
+
+    #location-select{
+        margin-left: 38%;
+    }
+    
+    .loclab{
+        margin-left: 37%;
+    }
+}

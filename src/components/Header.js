@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import '../components/Header.css';
 import logo from '../assets/logo.png';
-
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate()
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  function handlebook(){
+    navigate('/bookroom')
+  }
  
   return (
     <header className="header">
@@ -20,7 +24,7 @@ const Header = () => {
 
       {/* Book Now and Admin buttons for desktop */}
       <div className="button-group desktop-only">
-        <button className="book-now">Book Now</button>
+        <button onClick={handlebook} className="book-now">Book Now</button>
         <button className="admin">Admin</button>
       </div>
 
@@ -31,7 +35,7 @@ const Header = () => {
       {/* Mobile menu with both buttons */}
       {isMobileMenuOpen && (
         <nav className="mobile-menu">
-          <button className="book-now mobile-only">Book Now</button>
+          <button onClick={handlebook} className="book-now mobile-only">Book Now</button>
           <button className="admin mobile-only">Admin</button>
         </nav>
       )}

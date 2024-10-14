@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './BookingForm.css';
-import { mockRoomData } from '../components/mockData.js'; // Import the mock data
+import { mockRoomData } from '../components/mockData.js';
+
+import { useNavigate } from 'react-router-dom';
 
 const BookingForm = () => {
+  const navigate = useNavigate()
+  function handleBook (){
+    navigate('/bookroom')
+  }
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState('Dantewada');
@@ -38,23 +44,22 @@ const BookingForm = () => {
     setRooms([]); // Clear room availability when closed
   };
 
-  // Effect to scroll to availability section when it becomes visible
   useEffect(() => {
     if (availabilityChecked) {
-      const availabilitySection = document.getElementById('availability-section');
+      const availabilitySection = document.getElementById('booking-availability-section');
       if (availabilitySection) {
         availabilitySection.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  }, [availabilityChecked]); // Runs when availabilityChecked changes
+  }, [availabilityChecked]);
 
   return (
-    <div className="booking-form">
-      <div className="form-group">
-        <div className="location-select-container">
+    <div className="booking-form-container">
+      <div className="booking-form-group">
+        <div className="booking-location-select-container">
           <label>Location</label>
           <select 
-            className="location-select"
+            className="booking-location-select"
             value={selectedLocation} 
             onChange={(e) => setSelectedLocation(e.target.value)}>
             <option value="Dantewada">Dantewada</option>
@@ -62,9 +67,9 @@ const BookingForm = () => {
             <option value="Barsoor">Barsoor</option>
           </select>
         </div>
-
-        <div className="date-picker-group">
-          <div className="date-picker">
+   
+        <div className="booking-date-picker-group">
+          <div className="booking-date-picker">
             <label>Check-in | चेक इन</label>
             <DatePicker
               selected={checkInDate}
@@ -73,7 +78,7 @@ const BookingForm = () => {
             />
           </div>
 
-          <div className="date-picker">
+          <div className="booking-date-picker">
             <label>Check-out | चेक आउट</label>
             <DatePicker
               selected={checkOutDate}
@@ -84,21 +89,23 @@ const BookingForm = () => {
         </div>
       </div>
 
-      <div className="form-group">
+      <div className="booking-form-group">
+        <div className='check-now'>
         <button onClick={checkAvailability}>Check Availability</button>
-        <button className="book-now">Book Now</button>
+        <button onClick={handleBook} className="booking-book-now">Book Now</button>
+        </div>
       </div>
 
       {availabilityChecked && (
-        <div className="availability-section" id="availability-section">
-          <button className="close-button" onClick={closeAvailabilitySection}>×</button>
+        <div className="booking-availability-section" id="booking-availability-section">
+          <button className="booking-close-button" onClick={closeAvailabilitySection}>×</button>
           <h3>Room Availability</h3>
           {rooms.length > 0 ? (
             rooms.map((room) => (
-              <div className="room-status" key={room.roomNumber}>
+              <div className="booking-room-status" key={room.roomNumber}>
                 <span>Room {room.roomNumber}</span>
                 <span>{room.available ? 'Available' : 'Not Available'}</span>
-                <span className={`status-dot ${room.available ? 'green' : 'red'}`}></span>
+                <span className={`booking-status-dot ${room.available ? 'green' : 'red'}`}></span>
               </div>
             ))
           ) : (

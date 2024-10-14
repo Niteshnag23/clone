@@ -40,18 +40,19 @@ const BookRoom = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle the form submission here (e.g., send data to an API)
-    alert("Booking submitted!"); // Placeholder alert for submission
+    alert("Booking submitted!");
   };
 
   return (
     <>
-      <div className="bg-overlay"></div>
-      <div className="booking-form">
+      <div className="book-room-bg-overlay"></div>
+      <div className="book-room-form">
         <h2>Plan Your Stay With Us</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
+          <div className="book-room-form-group">
+          <label> Full Name:</label>
+
+            <input className="book-room-input"
               type="text"
               name="name"
               placeholder="Name"
@@ -60,8 +61,10 @@ const BookRoom = () => {
               required
             />
           </div>
-          <div className="form-group">
-            <input
+          <div className="book-room-form-group">
+          <label> Mobile Number:</label>
+
+            <input className="book-room-input"
               type="text"
               name="mobile"
               placeholder="Mobile Number"
@@ -71,9 +74,26 @@ const BookRoom = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="book-room-form-group">
+          <label>Select location:</label>
+   <select 
+   className="book-room-select"
+             name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              required >
+
+         <option value="Dantewada">Dantewada</option>
+         <option value="Geedam">Geedam</option>
+         <option value="Barsoor">Barsoor</option>
+
+   </select>
+
+          </div>
+
+          <div className="book-room-form-group">
             <label>Number of Guests:</label>
-            <input
+            <input className="book-room-input"
               type="number"
               name="numberOfGuests"
               value={formData.numberOfGuests}
@@ -83,9 +103,9 @@ const BookRoom = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label class="dif">Number of Rooms:</label>
-            <input
+          <div className="book-room-form-group">
+            <label className="book-room-dif">Number of Rooms:</label>
+            <input className="book-room-input"
               type="number"
               name="numberOfRooms"
               value={formData.numberOfRooms}
@@ -95,32 +115,32 @@ const BookRoom = () => {
             />
           </div>
 
-          <div className="date-container">
-            <div className="form-group">
+          <div className="book-room-date-container">
+            <div className="book-room-form-group">
               <label>Check-in Date:</label>
               <DatePicker
                 selected={formData.checkInDate}
                 onChange={(date) => handleDateChange(date, 'checkInDate')}
                 dateFormat="dd/MM/yyyy"
                 minDate={new Date()}
-                className="date-picker"
+                className="book-room-date-picker"
               />
             </div>
-            <div className="form-group">
+            <div className="book-room-form-group">
               <label>Check-out Date:</label>
               <DatePicker
                 selected={formData.checkOutDate}
                 onChange={(date) => handleDateChange(date, 'checkOutDate')}
                 dateFormat="dd/MM/yyyy"
                 minDate={formData.checkInDate}
-                className="date-picker"
+                className="book-room-date-picker"
               />
             </div>
           </div>
           
-          <div className="form-group">
+          <div className="book-room-form-group">
             <label>Type:</label>
-            <select
+            <select className="book-room-select"
               name="userType"
               value={formData.userType}
               onChange={handleInputChange}
@@ -130,18 +150,18 @@ const BookRoom = () => {
               <option value="government">Government Official</option>
             </select>
           </div>
-          <div className="form-group">
+          <div className="book-room-form-group">
             <label>
               Upload {formData.userType === "ordinary" ? "Aadhar/PAN" : "Government ID"}:
             </label>
-            <input
+            <input className="book-room-input"
               type="file"
               name="idImage"
               onChange={handleFileChange}
               required
             />
           </div>
-          <button type="submit" className="btn-book-now">Book Now</button>
+          <button type="submit" className="book-room-btn-book-now">Book Now</button>
         </form>
       </div>
     </>

@@ -26,12 +26,16 @@
   /* Container for English and Hindi sections */
   .terms-container {
     display: flex;
+    justify-content: center;
     justify-content: space-between;
     color: red;
   }
   
   /* Style for each section */
   .terms-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 48%; /* Make the sections take up half of the space each */
     padding: 20px;
     background-color: #fff;
@@ -67,11 +71,18 @@
   
   /* Responsive styles for mobile */
   @media (max-width: 768px) {
+    .terms-and-conditions{
+      left: 30%;
+    }
+
     .terms-container {
-      flex-direction: column; /* Stack sections vertically on small screens */
+      flex-direction: column;
+      padding: 0;
+      margin-left: 10%;
     }
   
     .terms-section {
+      /* justify-content: center; */
       width: 90%;
       margin-bottom: 20px; /* Add space between the two sections */
     }

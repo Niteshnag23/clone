@@ -1,120 +1,130 @@
-import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './BookingForm.css';
-import { mockRoomData } from '../components/mockData.js';
+// BookingForm.js
 
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import './BookingForm.css'; // Ensure the path is correct
 
 const BookingForm = () => {
-  const navigate = useNavigate()
-  function handleBook (){
-    navigate('/bookroom')
-  }
-  const [checkInDate, setCheckInDate] = useState(null);
-  const [checkOutDate, setCheckOutDate] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState('Dantewada');
-  const [rooms, setRooms] = useState([]);
-  const [availabilityChecked, setAvailabilityChecked] = useState(false);
-
-  const checkAvailability = () => {
-    if (!checkInDate || !checkOutDate) return;
-
-    const availableRooms = mockRoomData[selectedLocation].rooms.map((room) => {
-      const isAvailable = room.bookings.every(booking => {
-        const bookingStart = new Date(booking.start);
-        const bookingEnd = new Date(booking.end);
-        return (
-          (checkOutDate <= bookingStart || checkInDate >= bookingEnd)
-        );
-      });
-
-      return {
-        roomNumber: room.roomNumber,
-        available: isAvailable,
-      };
+    const [formData, setFormData] = useState({
+        location: '',
+        checkInDate: '',
+        checkOutDate: '',
+        isGovernmentOfficer: false,
     });
+    const [availability, setAvailability] = useState(null);
+    const [bookingStatus, setBookingStatus] = useState('');
+    const [roomAvailability, setRoomAvailability] = useState([]);
 
-    setRooms(availableRooms);
-    setAvailabilityChecked(true);
-  };
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value,
+        });
+    };
 
-  const closeAvailabilitySection = () => {
-    setAvailabilityChecked(false);
-    setRooms([]); // Clear room availability when closed
-  };
+    const checkAvailability = () => {
+        // Example logic to check room availability (Replace with your actual logic)
+        const rooms = [
+            { roomNumber: 101, available: true },
+            { roomNumber: 102, available: false },
+            { roomNumber: 103, available: true },
+        ];
+        setRoomAvailability(rooms);
+        setAvailability(true);
+    };
 
-  useEffect(() => {
-    if (availabilityChecked) {
-      const availabilitySection = document.getElementById('booking-availability-section');
-      if (availabilitySection) {
-        availabilitySection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [availabilityChecked]);
+    const handleBooking = () => {
+        // Logic for booking (replace with actual booking logic)
+        if (availability) {
+            setBookingStatus('Room booked successfully!');
+        } else {
+            setBookingStatus('Please check availability before booking.');
+        }
+    };
 
-  return (
-    <div className="booking-form-container">
-      <div className="booking-form-group">
-        <div className="booking-location-select-container">
-          <label>Location</label>
-          <select 
-            className="booking-location-select"
-            value={selectedLocation} 
-            onChange={(e) => setSelectedLocation(e.target.value)}>
-            <option value="Dantewada">Dantewada</option>
-            <option value="Geedam">Geedam</option>
-            <option value="Barsoor">Barsoor</option>
-          </select>
+    return (
+        <div className="booking-form-container">
+            <h2>Book a Room</h2>
+            <div className="booking-form-group">
+                <label htmlFor="location">Location:</label>
+                <select
+                    id="location"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleInputChange}
+                >
+                    <option value="">Select location</option>
+                    <option value="Location1">Location 1</option>
+                    <option value="Location2">Location 2</option>
+                    {/* Add more options as needed */}
+                </select>
+            </div>
+
+            <div className="booking-date-picker-group">
+                <div className="booking-date-picker">
+                    <label htmlFor="checkInDate">Check-In Date:</label>
+                    <input
+                        type="date"
+                        id="checkInDate"
+                        name="checkInDate"
+                        value={formData.checkInDate}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="booking-date-picker">
+                    <label htmlFor="checkOutDate">Check-Out Date:</label>
+                    <input
+                        type="date"
+                        id="checkOutDate"
+                        name="checkOutDate"
+                        value={formData.checkOutDate}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            </div>
+
+            <div className="booking-form-group">
+                <label>
+                    <input
+                        type="checkbox"
+                        name="isGovernmentOfficer"
+                        checked={formData.isGovernmentOfficer}
+                        onChange={handleInputChange}
+                    />
+                    Government Officer (Discounted Price)
+                </label>
+            </div>
+
+            <div className="check-now">
+                <button onClick={checkAvailability} className="check-availability-btn">
+                    Check Availability
+                </button>
+                <button onClick={handleBooking} className="book-now-btn">
+                    Book Now
+                </button>
+            </div>
+
+            {/* Availability Section */}
+            {availability && (
+                <div className="booking-availability-section">
+                    <h3>Room Availability:</h3>
+                    {roomAvailability.map((room) => (
+                        <div key={room.roomNumber} className="booking-room-status">
+                            <span>Room {room.roomNumber}</span>
+                            <span className={`booking-status-dot ${room.available ? 'booking-green' : 'booking-red'}`} />
+                        </div>
+                    ))}
+                    <button className="booking-close-button" onClick={() => setAvailability(null)}>
+                        Close
+                    </button>
+                </div>
+            )}
+
+            {/* Booking Status Message */}
+            {bookingStatus && <p className="booking-status-message">{bookingStatus}</p>}
         </div>
-   
-        <div className="booking-date-picker-group">
-          <div className="booking-date-picker">
-            <label>Check-in | चेक इन</label>
-            <DatePicker
-              selected={checkInDate}
-              onChange={(date) => setCheckInDate(date)}
-              placeholderText="Select Check-in Date"
-            />
-          </div>
-
-          <div className="booking-date-picker">
-            <label>Check-out | चेक आउट</label>
-            <DatePicker
-              selected={checkOutDate}
-              onChange={(date) => setCheckOutDate(date)}
-              placeholderText="Select Check-out Date"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="booking-form-group">
-        <div className='check-now'>
-        <button onClick={checkAvailability}>Check Availability</button>
-        <button onClick={handleBook} className="booking-book-now">Book Now</button>
-        </div>
-      </div>
-
-      {availabilityChecked && (
-        <div className="booking-availability-section" id="booking-availability-section">
-          <button className="booking-close-button" onClick={closeAvailabilitySection}>×</button>
-          <h3>Room Availability</h3>
-          {rooms.length > 0 ? (
-            rooms.map((room) => (
-              <div className="booking-room-status" key={room.roomNumber}>
-                <span>Room {room.roomNumber}</span>
-                <span>{room.available ? 'Available' : 'Not Available'}</span>
-                <span className={`booking-status-dot ${room.available ? 'green' : 'red'}`}></span>
-              </div>
-            ))
-          ) : (
-            <div>No rooms available for the selected dates.</div>
-          )}
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default BookingForm;
